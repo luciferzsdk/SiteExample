@@ -1,0 +1,61 @@
+﻿@model List<SiteExample.Models.Client>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Client List</h3>
+
+<div class="card">
+    <div class="card-header">
+        Clients
+    </div>
+    <div class="card-body">
+        <a class="btn btn-success" asp-controller="Client" asp-action="Create">New Client</a>
+        <!-- Table Start -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Client ID</th>
+                    <th scope="col">Client Name</th>
+                    <th scope="col">Edit / Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var client in Model)
+                {
+                    <tr>
+                        <td>@client.Id.ToString()</td>
+                        <td>@client.Name</td>
+                        <td>
+                            <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@client.Id">Edit</a>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Delete</button>
+
+                            <!-- Delete Modal Start-->
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog" style="color:black">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Item</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Confirm Delete This Category @client.Name ?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <form asp-action="Delete" method="post">
+                                                <button class="btn btn-primary" asp-action="Delete" asp-route-id="@client.Id">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Delete Modal End-->
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <!-- Table End -->
+    </div>
+</div>
